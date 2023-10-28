@@ -1,11 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  ssr: true,
+  ssr: false,
   modules: [
     'nuxt-vuefire',
+    '@nuxt/ui'
   ],
   vuefire: {
+    auth: {
+      enabled: true
+    },
     config: {
       apiKey: 'AIzaSyAIyFQl-uumudGBDylUd40h83jSlAAztiE',
       authDomain: 'baselhack2023-randoms.firebaseapp.com',
