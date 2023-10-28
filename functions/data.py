@@ -14,6 +14,7 @@ class User:
     return json.dumps(self.original)
 
 class Match:
-  def __init__(self, user1: User, user2: User):
+  def __init__(self, user1: User, user2: User, date: date = date.today()):
     self.user1 = user1
     self.user2 = user2
+    self.date = date
