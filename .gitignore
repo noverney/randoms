@@ -72,3 +72,6 @@ node_modules/
 
 # ignore the pycache
 __pycache__
+
+# ignore the folder of the generated docusaurus
+web/dist/*
