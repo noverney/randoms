@@ -34,7 +34,8 @@ It will setup you through the install and you add the code to the project then s
 ```
 Then to start the project you run:
 ```
-firebase emulators:start
+# this insures that local changes to the database gets saved for later testing
+firebase emulators:start --import export --export-on-exit export
 ```
 
 ## Running Locally
@@ -42,8 +43,16 @@ firebase emulators:start
 Make sure you setup a python3 virtual environment:
 
 ```
-python -m venv functions/venv
-source functions/venv/bin/activate && python -m pip install -r functions/requirements.txt
+sudo apt-get install python3.11
+sudo apt install python3.11-venv
+python3.11 -m venv functions/venv
+source functions/venv/bin/activate && python3.11 -m pip install -r functions/requirements.txt
+```
+
+For conda users:
+to turn off the default base so not opening initially 
+```
+conda config --set auto_activate_base false
 ```
 
 Install the emulators with `firebase init emulators` and then run `firebase emulators:start` to start the emulators.
