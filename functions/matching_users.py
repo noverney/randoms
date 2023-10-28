@@ -5,7 +5,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import collections
-from main import User
+from data import User
 
 def get_sorted_list_func(user_ids, user_preferences):
     def get_sorted_list(user_index):
@@ -45,7 +45,7 @@ def convert_preferences_to_matrix(users_preferences):
 
     return pref_matrix
 
-def create_matches_from_users(users):
+def create_matches_from_users(users: list[User]):
     # now we need to build the matrix 
     names_to_player = {x.id: Player(x.id) for x in users}
     id_to_user = {x.id: x for x in users}

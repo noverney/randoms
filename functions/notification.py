@@ -6,8 +6,7 @@ from postmarker.core import PostmarkClient
 POSTMARK_API_KEY = SecretParam('POSTMARK_API_KEY')
 
 def notify_user_about_match(match: Match):
-  send_email_to_user(match.user1, match.user2)
-  send_email_to_user(match.user2, match.user1)
+  send_email_to_user(match.user1, match.user2) # the algorithm generates the matches in both directions, so we only need to send one email
 
 def send_email_to_user(user: User, matchedWith: User):
   other_user_email = "alex_rovner@hotmail.de"
