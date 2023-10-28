@@ -10,6 +10,8 @@ from data import User, Match
 from notification import notify_user_about_match, POSTMARK_API_KEY
 from matching_users import create_matches_from_users
 from postmarker.core import PostmarkClient
+from data import add_fake_firestore_users
+import os
 
 default_app = initialize_app()
 
@@ -34,3 +36,10 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
     notify_user_about_match(match)
 
   return https_fn.Response(resp)
+
+@https_fn.on_request()
+def add_fake_users(req: https_fn.Request) -> https_fn.Response:
+  if os.environ["PROFILE"] != "dev":
+    return https_fn.Response("Not allowed")
+  add_fake_firestore_users(10)
+  return https_fn.Response("Added 10 fake users")
