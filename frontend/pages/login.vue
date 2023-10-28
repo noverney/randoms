@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithRedirect, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 definePageMeta({
     layout: false
@@ -48,7 +48,7 @@ watch([currentUser], () => {
 })
 
 const signinRedirect = async () => {
-    signInWithRedirect(auth, googleAuthProvider).catch((reason) => {
+    signInWithPopup(auth, googleAuthProvider).catch((reason) => {
         console.error('Failed signinRedirect', reason)
         error.value = reason
     })
