@@ -10,6 +10,10 @@
 <script setup lang="ts">
 import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth'
 
+definePageMeta({
+    layout: false
+})
+
 const googleAuthProvider = new GoogleAuthProvider()
 const auth = useFirebaseAuth()!
 const currentUser = useCurrentUser()
