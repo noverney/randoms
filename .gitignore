@@ -12,6 +12,8 @@ firebase-debug.*.log*
 
 export/
 venv/
+.secret.local
+.env.local
 
 # Firebase config
 

@@ -20,14 +20,14 @@ def get_all_users():
 
 def match_users(users: list[User]):
   # this is the entrypoint for your matching code
-  return [Match(pair[0], pair[1], date.today()) for pair in zip(users[0::2], users[1::2])]
+  return [Match(pair[0], pair[1]) for pair in zip(users[0::2], users[1::2])]
 
 @https_fn.on_request()
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   matches = match_users(get_all_users())
   resp = ""
   for match in matches:
-    resp += f"{match.user1.name} + {match.user2.name} on {str(match.date)}\n"
+    resp += f"{match.user1.name} + {match.user2.name}\n"
     notify_user_about_match(match)
 
   return https_fn.Response(resp)
