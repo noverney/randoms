@@ -39,6 +39,12 @@ firebase emulators:start
 
 ## Running Locally
 
-Make sure you setup a python3 virtual environment with `python3 -m venv venv`.
+Make sure you setup a python3 virtual environment:
+
+```
+python -m venv functions/venv
+source functions/venv/bin/activate && python -m pip install -r functions/requirements.txt
+```
+
 Install the emulators with `firebase init emulators` and then run `firebase emulators:start` to start the emulators.
 The emulator UI will be available under `localhost:4000`. The webpage will be available under `localhost:5000`.
