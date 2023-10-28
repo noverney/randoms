@@ -41,7 +41,7 @@ def add_fake_firestore_users(amount):
   fake_users = create_fake_users(amount)
   db = firestore.client()
   for user in fake_users:
-    new_user = auth.create_user(email=f"alex_rovner+{user.name.lower().replace(' ', '_')}@hotmail.de", password="123456")
+    new_user = auth.create_user(email=f"alex_rovner+{user.name.lower().replace('-', '_').replace(' ', '_')}@hotmail.de", password="123456")
     db.collection("users").document(new_user.uid).set({
       "name": user.name,
       "preferences": user.preferences,
