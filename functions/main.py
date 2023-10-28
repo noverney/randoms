@@ -5,17 +5,11 @@
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from firebase_admin import firestore
+from datetime import date
+from data import User, Match
+from notification import notify_user_about_match
 
 default_app = initialize_app()
-
-class User:
-  def __init__(self, id: str, doc: dict):
-    self.id = id
-    self.name = doc["name"]
-    self.preferences = doc["preferences"]
-  
-  def __str__(self):
-    return f"User({self.id}, {self.name}, {self.preferences})"
 
 def get_all_users():
   db = firestore.client()
@@ -26,8 +20,14 @@ def get_all_users():
 
 def match_users(users: list[User]):
   # this is the entrypoint for your matching code
-  return zip(users[0::2], users[1::2])
+  return [Match(pair[0], pair[1]) for pair in zip(users[0::2], users[1::2])]
 
 @https_fn.on_request()
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
-  return https_fn.Response(",".join([f"{str(x[0])}+{str(x[1])}" for x in match_users(get_all_users())]))
+  matches = match_users(get_all_users())
+  resp = ""
+  for match in matches:
+    resp += f"{match.user1.name} + {match.user2.name}\n"
+    notify_user_about_match(match)
+
+  return https_fn.Response(resp)
