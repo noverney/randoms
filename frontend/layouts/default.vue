@@ -75,8 +75,6 @@ const me = useDocument(doc(collection(firestore, 'users'), user.uid))
 
 watch([me], async () => {
   if (user && !me.value) {
-    console.log("doc created")
-    console.log(user, me.value)
     await setDoc(doc(firestore, "users", user.uid), {
       name: user.displayName,
       preferences: {},
