@@ -20,9 +20,15 @@ def send_email_to_user(user: User, matchedWith: User):
     print(f"Would send email to {other_user_email} with body:\n{body}")
   else:
     postmark = PostmarkClient(server_token=POSTMARK_API_KEY.value)
-    postmark.emails.send(
+    postmark.emails.send_with_template(
       From='alex@rovner.ch',
       To=other_user_email,
-      Subject='You have been matched!',
-      HtmlBody=body
+      TemplateId="33637852",
+      TemplateModel={
+        "name": user.name,
+        "action_url": "https://baselhack2023-randoms.web.app/",
+        "matched_with": matchedWith.name,
+        "help_url": "https://baselhack2023-randoms.web.app/",
+        "product_name": "MeetingMunch"
+      }
     )
