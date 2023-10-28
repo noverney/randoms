@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "prod": "baselhack2023-randoms",
+    "default": "baselhack2023-randoms"
+  },
+  "targets": {},
+  "etags": {}
+}
