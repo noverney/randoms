@@ -30,13 +30,27 @@ def match_users(users: list[User]):
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   matches = match_users(get_all_users())
   resp = ""
+
+  # Write to Firestore
+  db = firestore.client()
+  
   seen = set()
   for match in matches:
     notify_user_about_match(match)
     if match.user1.name in seen or match.user2.name in seen:
       continue
+
     seen.add(match.user1.name)
     seen.add(match.user2.name)
+
+    db.collection("matches").document().set({
+      "participants": [
+        match.user1.id,
+        match.user2.id,
+      ],
+      "date": match.date.isoformat()
+    }, merge=True)
+
     resp += f"{match.user1.name} + {match.user2.name}\n"
 
   return https_fn.Response(resp)
