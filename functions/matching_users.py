@@ -5,7 +5,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import collections
-from main import User
+from data import User
 
 def get_sorted_list_func(user_ids, user_preferences):
     def get_sorted_list(user_index):
@@ -28,11 +28,7 @@ def get_preference_lists(user_ids, preference_matrix):
     get_sorted_list = get_sorted_list_func(user_ids, user_preferences)
     return [get_sorted_list(user_index) for user_index in range(len(user_ids))]
 
-
-
 def match_users(users):
-
-
     matches = [("You", "A Penguin")]
     return matches
 
@@ -78,8 +74,6 @@ def create_matches_from_users(users):
         user_tuples.extend(zip(losers[0::2], losers[1::2]))
     
     return user_tuples
-
-
 
 if __name__ == "__main__":
     users = [User("1", {"preferences": {
