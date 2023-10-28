@@ -9,6 +9,8 @@ from datetime import date
 from data import User, Match
 from notification import notify_user_about_match, POSTMARK_API_KEY
 from matching_users import create_matches_from_users
+from data import add_fake_firestore_users
+import os
 
 default_app = initialize_app()
 
@@ -28,8 +30,34 @@ def match_users(users: list[User]):
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   matches = match_users(get_all_users())
   resp = ""
+
+  # Write to Firestore
+  db = firestore.client()
+  
+  seen = set()
   for match in matches:
-    resp += f"{match.user1.name} + {match.user2.name}\n"
     notify_user_about_match(match)
+    if match.user1.name in seen or match.user2.name in seen:
+      continue
+
+    seen.add(match.user1.name)
+    seen.add(match.user2.name)
+
+    db.collection("matches").document().set({
+      "participants": [
+        match.user1.id,
+        match.user2.id,
+      ],
+      "date": match.date.isoformat()
+    }, merge=True)
+
+    resp += f"{match.user1.name} + {match.user2.name}\n"
 
   return https_fn.Response(resp)
+
+@https_fn.on_request()
+def add_fake_users(req: https_fn.Request) -> https_fn.Response:
+  if os.environ["PROFILE"] != "dev":
+    return https_fn.Response("Not allowed")
+  add_fake_firestore_users(10)
+  return https_fn.Response("Added 10 fake users")
