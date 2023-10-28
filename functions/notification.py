@@ -17,15 +17,13 @@ def send_email_to_user(user: User, matchedWith: User):
   except:
     pass
   body = f"Hi {user.name}! You have been matched with {matchedWith.name}! Reach out to them via {other_user_email} and have fun!"
-  if POSTMARK_API_KEY.value is "dummy":
+  if POSTMARK_API_KEY.value == "dummy":
     print(f"Would send email to {other_user_email} with body:\n{body}")
-    return
-
-  postmark = PostmarkClient(server_token=POSTMARK_API_KEY.value)
-  postmark.emails.send(
-    From='alex@rovner.ch',
-    To=other_user_email,
-    Subject='You have been matched!',
-    HtmlBody=body
-  )
-  print(body)
+  else:
+    postmark = PostmarkClient(server_token=POSTMARK_API_KEY.value)
+    postmark.emails.send(
+      From='alex@rovner.ch',
+      To=other_user_email,
+      Subject='You have been matched!',
+      HtmlBody=body
+    )
