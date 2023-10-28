@@ -7,7 +7,9 @@ from firebase_admin import initialize_app
 from firebase_admin import firestore
 from datetime import date
 from data import User, Match
-from notification import notify_user_about_match
+from notification import notify_user_about_match, POSTMARK_API_KEY
+from matching_users import create_matches_from_users
+from postmarker.core import PostmarkClient
 
 default_app = initialize_app()
 
@@ -20,9 +22,10 @@ def get_all_users():
 
 def match_users(users: list[User]):
   # this is the entrypoint for your matching code
-  return [Match(pair[0], pair[1]) for pair in zip(users[0::2], users[1::2])]
+  return [Match(pair[0], pair[1]) for pair in create_matches_from_users(users)]
 
-@https_fn.on_request()
+
+@https_fn.on_request(secrets=[POSTMARK_API_KEY])
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   matches = match_users(get_all_users())
   resp = ""

@@ -28,10 +28,6 @@ def get_preference_lists(user_ids, preference_matrix):
     get_sorted_list = get_sorted_list_func(user_ids, user_preferences)
     return [get_sorted_list(user_index) for user_index in range(len(user_ids))]
 
-def match_users(users):
-    matches = [("You", "A Penguin")]
-    return matches
-
 def convert_preferences_to_matrix(users_preferences):
     # Get the list of all topics from the user preferences
     all_topics = set().union(*users_preferences)
@@ -41,7 +37,7 @@ def convert_preferences_to_matrix(users_preferences):
 
     return pref_matrix
 
-def create_matches_from_users(users):
+def create_matches_from_users(users: list[User]):
     # now we need to build the matrix 
     names_to_player = {x.id: Player(x.id) for x in users}
     id_to_user = {x.id: x for x in users}

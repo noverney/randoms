@@ -28,7 +28,11 @@
         </div>
     </header>
     <main>
-        <slot />
+
+        <div class="mx-auto flex max-w-7xl items-center p-4 sm:px-6 lg:px-8">
+
+            <slot />
+        </div>
     </main>
 </template>
 
