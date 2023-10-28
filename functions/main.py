@@ -9,7 +9,6 @@ from datetime import date
 from data import User, Match
 from notification import notify_user_about_match, POSTMARK_API_KEY
 from matching_users import create_matches_from_users
-from postmarker.core import PostmarkClient
 from data import add_fake_firestore_users
 import os
 
