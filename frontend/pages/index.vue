@@ -98,12 +98,6 @@
             </figure>
           </div>
         </div>
-        <p class="italic pt-3">"{{ funfacts }}"</p>
-        <div class="flex items-center pt-3 space-x-2">
-          <UBadge color="sky" variant="outline">Mangas</UBadge>
-          <UBadge color="sky" variant="outline">Harry Potter</UBadge>
-          <UBadge color="sky" variant="outline">Hacking</UBadge>
-        </div>
       </div>
     </div>
   </div>
