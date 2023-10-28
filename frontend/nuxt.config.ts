@@ -6,6 +6,9 @@ export default defineNuxtConfig({
     'nuxt-vuefire',
     '@nuxt/ui'
   ],
+  colorMode: {
+    preference: 'light'
+  },
   vuefire: {
     auth: {
       enabled: true
