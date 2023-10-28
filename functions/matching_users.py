@@ -71,8 +71,6 @@ def create_matches_from_users(users: list[User]):
     
     return user_tuples
 
-
-
 if __name__ == "__main__":
     users = [User("1", {"preferences": {
                             "guns": 5,
