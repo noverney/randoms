@@ -38,38 +38,14 @@ yarn dev
 bun run dev
 ```
 
-## Production
+## Deploy frontend
 
-Build the application for production:
+Generate new version of frontend code.
+ ```bash
+ npm run generate
+ ```
 
+Publish code to firebase hosting.
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+firebase deploy
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
