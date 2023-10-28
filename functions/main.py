@@ -35,23 +35,25 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   db = firestore.client()
   
   seen = set()
+  print("Putting match into firestore and notifying users")
   for match in matches:
     notify_user_about_match(match)
-    if match.user1.name in seen or match.user2.name in seen:
-      continue
 
-    seen.add(match.user1.name)
-    seen.add(match.user2.name)
+    if match.user1.id not in seen and match.user2.id not in seen:
+      seen.add(match.user1.id)
+      seen.add(match.user2.id)
 
-    db.collection("matches").document().set({
-      "participants": [
-        match.user1.id,
-        match.user2.id,
-      ],
-      "date": match.date.isoformat()
-    }, merge=True)
+      key = ".".join(sorted([match.user1.id, match.user2.id])) + "." + match.date.isoformat()
 
-    resp += f"{match.user1.name} + {match.user2.name}\n"
+      db.collection("matches").document(key).set({
+        "participants": [
+          match.user1.id,
+          match.user2.id,
+        ],
+        "date": match.date.isoformat()
+      }, merge=True)
+
+      resp += f"{match.user1.name} + {match.user2.name}\n"
 
   return https_fn.Response(resp)
 
@@ -59,5 +61,6 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
 def add_fake_users(req: https_fn.Request) -> https_fn.Response:
   if os.environ["PROFILE"] != "dev":
     return https_fn.Response("Not allowed")
+  print("Adding fake users")
   add_fake_firestore_users(10)
   return https_fn.Response("Added 10 fake users")
