@@ -1,9 +1,10 @@
 <template>
-    <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[280px]">
-            <div class="mt-6 grid grid-cols-1 gap-4">
-
-
+    <div class="flex flex-row">
+    <div class="basis-1/3">
+        <img src="~/public/landing-page-1.jpeg">
+    </div>
+<div class="basis-2/3 p-4">
+<span class="text-2xl font-bold flex justify-center mt-5 mb-20">Let's meet some nice people!</span>
                 <button @click="signinRedirect"
                     class="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -21,11 +22,11 @@
                             fill="#EA4335" />
                         <path d="M1 1h22v22H1z" fill="none" />
                     </svg>
-                    <span class="text-sm font-semibold leading-6">Google</span>
+                    <span class="text-sm font-semibold leading-6">Sign in with Google</span>
                 </button>
+</div>
             </div>
-        </div>
-    </div>
+
 </template>
 
 <script setup lang="ts">
