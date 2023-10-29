@@ -35,7 +35,7 @@ def get_preference_lists(user_ids, preference_matrix):
     check_input(user_ids, preference_matrix)
 
     user_preferences = cosine_similarity(preference_matrix)
-    user_preferences = add_noise_to_array(user_preferences, 1) # ADJUST NOISE HERE
+    user_preferences = add_noise_to_array(user_preferences, 0) # ADJUST NOISE HERE
 
     get_sorted_list = get_sorted_list_func(user_ids, user_preferences)
     return [get_sorted_list(user_index) for user_index in range(len(user_ids))]
