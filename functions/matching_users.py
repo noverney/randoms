@@ -5,7 +5,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import collections
-from data import User
+from functions.data import User
 
 def get_sorted_list_func(user_ids, user_preferences):
     def get_sorted_list(user_index):
@@ -37,6 +37,14 @@ def convert_preferences_to_matrix(users_preferences):
 
     return pref_matrix
 
+def remove_previous_matches(preference_order, previous_matches):
+
+    for match in previous_matches:
+        preference_order[match[0]].pop(preference_order[match[0]].index(match[1]))
+        preference_order[match[1]].pop(preference_order[match[1]].index(match[0]))
+
+    return preference_order
+
 def create_matches_from_users(users: list[User]):
     # now we need to build the matrix 
     names_to_player = {x.id: Player(x.id) for x in users}
@@ -45,9 +53,15 @@ def create_matches_from_users(users: list[User]):
     names = [x.id for x in users]
     pref_matrix = convert_preferences_to_matrix([x.preferences for x in users])
 
+
+
     #print(pref_matrix)
     preference_order = get_preference_lists(names, pref_matrix)
     #print(preference_order)
+
+    # Uncomment line below if we want to remove previous matches, just need list of touples of previous matches
+    # like [(1,2),(3,4)]
+    # preference_order = remove_previous_matches(preference_order, previous_matches)
 
     for name,pref in zip(names,preference_order):
         player = names_to_player[name]
@@ -71,37 +85,4 @@ def create_matches_from_users(users: list[User]):
     
     return user_tuples
 
-if __name__ == "__main__":
-    users = [User("1", {"preferences": {
-                            "guns": 5,
-                            "dogs": 5
-                        },
-                        "days": [
-                            "mon",
-                            "fri"
-                        ],
-                        "name": "John Wick",
-                        "id": "1"
-                        }), 
-            User("2", {"preferences": {
-                            "guns": 5,
-                            "dogs": 3
-                        },
-                        "days": [
-                            "mon",
-                            "fri"
-                        ],
-                        "name": "John Shirt",
-                        "id": "2"
-                        }), 
-            User("3", {"preferences": {
-                            
-                        },
-                        "days": [
-                            "mon",
-                            "fri"
-                        ],
-                        "name": "John Pants",
-                        "id": "3"
-                        }), ]
-    print([(match1.id,match2.id)  for match1,match2 in create_matches_from_users(users)])
+
