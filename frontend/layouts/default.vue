@@ -8,9 +8,7 @@
       <div class="flex items-center gap-x-8">
         <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
           :popper="{ placement: 'bottom-end' }">
-          <UAvatar :src="currentUser?.photoURL ||
-            'https://avatars.githubusercontent.com/u/739984?v=4'
-            " />
+          <UAvatar :src="currentUser?.photoURL || undefined" :alt="currentUser?.displayName || 'A'" />
           <template #account="{ item }">
             <div class="text-left">
               <p>Signed in as</p>
