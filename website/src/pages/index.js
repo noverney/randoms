@@ -17,7 +17,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="http://localhost:5000/login">
+            to="https://meetingmunch.com/login">
             Get Started - 5min ⏱️
           </Link>
         </div>
