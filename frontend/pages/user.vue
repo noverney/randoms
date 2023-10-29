@@ -38,6 +38,8 @@
 <script setup lang="ts">
 import { doc, setDoc } from "firebase/firestore";
 
+const toast = useToast()
+
 definePageMeta({
   middleware: ["auth"],
 });
@@ -69,6 +71,7 @@ const saveChanges = async () => {
     preferences: interestsObject,
     funfacts: funfacts.value,
   });
-  console.log("SAVED");
+ toast.add({ title: 'Info saved!' , icon:'i-heroicons-check-circle'})
+
 };
 </script>
