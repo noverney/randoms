@@ -93,21 +93,13 @@
                 <p>“{{ funfacts }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
-                <div class="pb-4 space-x-2">
+                <div v-if="matchedUser?.preferences" class="pb-4 space-x-2">
                   <UBadge
                     v-for="(value, key) in matchedUser?.preferences"
                     color="white"
                     variant="outline"
                     >{{ key }}
                   </UBadge>
-                  <UBadge
-                    v-if="
-                      Object.keys(matchedUser?.preferences || {}).length === 0
-                    "
-                    color="white"
-                    variant="outline"
-                    >#BoringPerson</UBadge
-                  >
                 </div>
               </figcaption>
             </figure>
@@ -168,6 +160,13 @@ const docsSnap = await getDocs(
 
 // Get the latest match
 const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
-const matchedUser = lastDoc.data().participants[0];
+
+const participants = lastDoc.data().participants;
+let matchedUser = participants[0];
+
+if (matchedUser === userId) {
+  matchedUser = participants[1];
+}
+
 console.log("MATCHED USER", matchedUser);
 </script>
