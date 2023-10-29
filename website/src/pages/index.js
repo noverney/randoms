@@ -18,7 +18,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="https://meetingmunch.com/login">
-            Get Started - 5min ⏱️
+            Get Started - 1min ⏱️
           </Link>
         </div>
       </div>

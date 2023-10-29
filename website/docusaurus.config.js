@@ -127,7 +127,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} MeetingMunch, Inc. Built at BaselHack.`,
+        copyright: `Copyright © ${new Date().getFullYear()} MeetingMunch, Inc. Built with ❤️ at BaselHack.`,
       },
       prism: {
         theme: lightCodeTheme,
