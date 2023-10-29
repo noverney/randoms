@@ -6,14 +6,23 @@ from faker import Faker
 from firebase_admin import firestore
 from firebase_admin import auth
 
+def get_user_from_auth(uid: str):
+  return auth.get_user(uid)
+
 class User:
   def __init__(self, id: str, doc: dict):
     self.id = id
-    self.name = doc["name"]
+    self.name = "<no name>" if "name" not in doc else doc["name"]
     self.preferences = doc["preferences"]
     self.days = doc["days"]
     self.original = doc
     self.original["id"] = id
+  
+  def load_name_from_firestore(self):
+    user = get_user_from_auth(self.id)
+    self.name = user.display_name
+    self.avatarUrl = user.photo_url
+    self.email = user.email
   
   def __str__(self):
     return json.dumps(self.original)
@@ -41,9 +50,8 @@ def add_fake_firestore_users(amount):
   fake_users = create_fake_users(amount)
   db = firestore.client()
   for user in fake_users:
-    new_user = auth.create_user(email=f"alex_rovner+{user.name.lower().replace('-', '_').replace(' ', '_')}@hotmail.de", password="123456")
+    new_user = auth.create_user(email=f"alex_rovner+{user.name.lower().replace('-', '_').replace(' ', '_')}@hotmail.de", display_name=user.name ,password="123456")
     db.collection("users").document(new_user.uid).set({
-      "name": user.name,
       "preferences": user.preferences,
       "days": user.days,
       "fun-facts": ["I like to eat", "I like to sleep", "I like to code"]

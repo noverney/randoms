@@ -45,10 +45,22 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
 
       key = ".".join(sorted([match.user1.id, match.user2.id])) + "." + match.date.isoformat()
 
+      match.user1.load_name_from_firestore()
+      match.user2.load_name_from_firestore()
       db.collection("matches").document(key).set({
         "participants": [
-          match.user1.id,
-          match.user2.id,
+          {
+            "id": match.user1.id,
+            "name": match.user1.name,
+            "email": match.user1.email,
+            "avatarUrl": match.user1.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+          },
+          {
+            "id": match.user2.id,
+            "name": match.user2.name,
+            "email": match.user2.email,
+            "avatarUrl": match.user1.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+          }
         ],
         "date": match.date.isoformat()
       }, merge=True)
