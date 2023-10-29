@@ -93,12 +93,12 @@
                 <p>“{{ funfacts }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
-                <div v-if="matchedUser?.preferences" class="pb-4 space-x-2">
+                <div class="pb-4 space-x-2">
                   <UBadge
-                    v-for="(value, key) in matchedUser?.preferences"
+                    v-for="(key, value) in userPreferences"
                     color="white"
                     variant="outline"
-                    >{{ key }}
+                    >{{ value }}
                   </UBadge>
                 </div>
               </figcaption>
@@ -169,4 +169,9 @@ if (matchedUser.id === userId) {
 }
 
 console.log("MATCHED USER", matchedUser);
+
+const matchedUserFs = useDocument(
+  doc(collection(firestore, "users"), matchedUser.id)
+);
+const userPreferences = matchedUserFs.value?.preferences;
 </script>
