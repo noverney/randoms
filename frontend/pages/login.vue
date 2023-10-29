@@ -1,11 +1,29 @@
 <template>
-    <div class="flex flex-row">
-    <div class="basis-1/3">
-        <img src="~/public/landing-page-1.jpeg">
-    </div>
-<div class="basis-2/3 p-4">
-<span class="text-2xl font-bold flex justify-center mt-5 mb-20">Let's meet some nice people!</span>
-                <button @click="signinRedirect"
+    <section class="flex items-center justify-center bg-gray-50 h-screen">
+
+    <div class="flex bg-sky-100 max-w-3xl rounded-2xl shadow-lg p-5">
+        <!-- IMAGE -->
+        <div class="sm:block hidden w-1/2">
+         <img class="rounded-2xl" src="~/public/landing-page-1.jpeg">
+        </div>
+        
+        <!-- FORM -->
+        <div class="sm:w-1/2 bg-sky-200 px-20">
+            <h2 class="font-bold text-2xl mb-2">Let's meet some cool people!</h2>
+            <p class="text-xs">Already registered? Login below.</p>
+
+            <form class="flex flex-col">
+                <UInput class="p-1 mt-4" type="text" placeholder="Email"></UInput>
+                <UInput class="p-1" type="password" placeholder="Password"></UInput>
+                <UButton>Login</UButton>
+            </form>
+            <div class="mt-2 grid grid-cols-3 items-center">
+                <hr>
+                <p class="text-gray-500">OR</p>
+                <hr>
+            </div>
+            <!-- GOOGLE SIGN-IN -->
+                            <button @click="signinRedirect"
                     class="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
                         <path
@@ -24,9 +42,10 @@
                     </svg>
                     <span class="text-sm font-semibold leading-6">Sign in with Google</span>
                 </button>
-</div>
-            </div>
+        </div>
 
+    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
