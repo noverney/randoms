@@ -11,7 +11,7 @@
             aria-hidden="true"
           >
             <div
-              class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-[0.45]"
+              class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#A8005C] to-[#009EE3] opacity-[0.45]"
               style="
                 clip-path: polygon(
                   74.1% 44.1%,
@@ -39,7 +39,7 @@
             aria-hidden="true"
           >
             <div
-              class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-25"
+              class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#A8005C] to-[#009EE3] opacity-25"
               style="
                 clip-path: polygon(
                   74.1% 44.1%,
@@ -90,7 +90,7 @@
               <blockquote
                 class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8"
               >
-                <p>“{{ funfact }}”</p>
+                <p class="italic font-light">“{{ funfact }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
