@@ -5,7 +5,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import collections
-from functions.data import User
+from data import User
 
 def get_sorted_list_func(user_ids, user_preferences):
     def get_sorted_list(user_index):
@@ -21,10 +21,22 @@ def check_input(user_ids, preference_matrix):
     if len(user_ids) != len(preference_matrix):
         raise ValueError(f"user list and matrix length do not match")
 
+def add_noise_to_array(arr, noise_factor):
+    if not 0 <= noise_factor <= 1:
+        raise ValueError("Noise factor should be between 0 and 1")
+    elif noise_factor == 0:
+        return arr
+    noise = np.random.uniform(0, noise_factor, arr.shape)
+    noisy_array = arr + noise
+    noisy_array = np.clip(noisy_array, 0, 1)
+    return noisy_array
+
 def get_preference_lists(user_ids, preference_matrix):
     check_input(user_ids, preference_matrix)
 
     user_preferences = cosine_similarity(preference_matrix)
+    user_preferences = add_noise_to_array(user_preferences, 0) # ADJUST NOISE HERE
+
     get_sorted_list = get_sorted_list_func(user_ids, user_preferences)
     return [get_sorted_list(user_index) for user_index in range(len(user_ids))]
 

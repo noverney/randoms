@@ -99,6 +99,8 @@ watch(extendedUserInformation, () => {
   }
 })
 
+const toast = useToast()
+
 const department = ref('')
 const funfact = ref('')
 const userInterests = ref<UserInterests>({})
@@ -136,5 +138,9 @@ const saveChanges = async () => {
     team: department.value,
     days: selectedDays.value
   });
+  
+  toast.add({title: 'Informations Saved!', icon: 'i-heroicons-check-circle'})
+
+  navigateTo('/')
 };
 </script>

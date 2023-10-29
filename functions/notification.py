@@ -23,14 +23,14 @@ def send_email_to_user(user: User, matchedWith: User):
   else:
     postmark = PostmarkClient(server_token=POSTMARK_API_KEY.value)
     postmark.emails.send_with_template(
-      From='alex@rovner.ch',
+      From='noreply@meetingmunch.com',
       To=user_email,
       TemplateId="33637852",
       TemplateModel={
         "name": user.name,
-        "action_url": "https://baselhack2023-randoms.web.app/",
+        "action_url": "https://meetingmunch.com/",
         "matched_with": matchedWith.name,
-        "help_url": "https://baselhack2023-randoms.web.app/",
+        "help_url": "https://meetingmunch.com/",
         "product_name": "MeetingMunch"
       }
     )

@@ -5,6 +5,7 @@
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from firebase_admin import firestore
+from firebase_admin import auth
 from datetime import date
 from data import User, Match
 from notification import notify_user_about_match, POSTMARK_API_KEY
@@ -14,12 +15,20 @@ import os
 
 default_app = initialize_app()
 
+def user_exists(uid: str):
+  try:
+    auth.get_user(uid)
+    return True
+  except:
+    print("User with ID " + uid + " does not exist")
+    return False
+
 def get_all_users():
   db = firestore.client()
   docs = (
     db.collection("users")
     .stream())
-  return [ User(doc.id, doc.to_dict()) for doc in docs ]
+  return [ User(doc.id, doc.to_dict()) for doc in docs if user_exists(doc.id) ]
 
 def match_users(users: list[User]):
   # this is the entrypoint for your matching code
@@ -59,7 +68,7 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
             "id": match.user2.id,
             "name": match.user2.name,
             "email": match.user2.email,
-            "avatarUrl": match.user1.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user2.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+            "avatarUrl": match.user2.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user2.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
           }
         ],
         "date": match.date.isoformat()
@@ -78,3 +87,5 @@ def add_fake_users(req: https_fn.Request) -> https_fn.Response:
   print("Adding fake users")
   add_fake_firestore_users(4)
   return https_fn.Response("Added 10 fake users")
+
+
