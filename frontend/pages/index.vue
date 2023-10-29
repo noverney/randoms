@@ -94,8 +94,12 @@
                 </div>
                 <div class="font-semibold">{{ nextMatchedUser?.name }}</div>
                 <div class="mt-1">{{ nextMatchedUser?.team }}</div>
-              <UButton variant="ghost" icon="i-heroicons-envelope" @click="sendEmail()">
-             </UButton>
+                <UButton
+                  variant="ghost"
+                  icon="i-heroicons-envelope"
+                  @click="sendEmail()"
+                >
+                </UButton>
               </figcaption>
             </figure>
           </div>
@@ -125,7 +129,7 @@ type User = {
 };
 
 function sendEmail() {
-  window.location = "mailto:remy.jaume@gmail.com"
+  window.open("mailto:remy.jaume@gmail.com", "_blank");
 }
 
 definePageMeta({
