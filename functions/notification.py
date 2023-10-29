@@ -10,6 +10,8 @@ def notify_user_about_match(match: Match):
 
 def send_email_to_user(user: User, matchedWith: User):
   user_email = "alex_rovner@hotmail.de" # fallback email
+  user.load_name_from_firestore()
+  matchedWith.load_name_from_firestore()
   try:
     user_data = auth.get_user(user.id)
     user_email = user_data.email

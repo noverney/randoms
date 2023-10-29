@@ -127,13 +127,14 @@ import {
   where,
 } from "firebase/firestore";
 
-type User = {
+export type User = {
   days: Array<string>;
   name: string;
   team: string;
   preferences: {
-    [key: string]: string;
+    [key: string]: number;
   };
+  funfacts: string;
 };
 
 function sendEmail() {
