@@ -5,6 +5,7 @@
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from firebase_admin import firestore
+from firebase_admin import auth
 from datetime import date
 from data import User, Match
 from notification import notify_user_about_match, POSTMARK_API_KEY
@@ -14,12 +15,20 @@ import os
 
 default_app = initialize_app()
 
+def user_exists(uid: str):
+  try:
+    auth.get_user(uid)
+    return True
+  except:
+    print("User with ID " + uid + " does not exist")
+    return False
+
 def get_all_users():
   db = firestore.client()
   docs = (
     db.collection("users")
     .stream())
-  return [ User(doc.id, doc.to_dict()) for doc in docs ]
+  return [ User(doc.id, doc.to_dict()) for doc in docs if user_exists(doc.id) ]
 
 def match_users(users: list[User]):
   # this is the entrypoint for your matching code
