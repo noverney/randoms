@@ -88,13 +88,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Show all user details in a list -->
-  <!-- <ul>
-    <li v-for="user in users" :key="user.id">
-      {{ user.name }} : {{ user.preferences }}
-    </li>
-  </ul> -->
 </template>
 
 <script setup lang="ts">
@@ -132,20 +125,28 @@ const docsSnap = await getDocs(
 );
 
 // Get the latest match
+let matchedUserId = undefined
+let matchedUser = {}
+let matchedUserFs = undefined
+
 const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
 
-const participants = lastDoc.data().participants;
-let matchedUser = participants[0];
 
-if (matchedUser.id === userId) {
-  matchedUser = participants[1];
+if (lastDoc) {
+
+  const participants = lastDoc.data().participants;
+  matchedUser = participants[0];
+
+  if (matchedUser.id === userId) {
+    matchedUser = participants[1];
+  }
+
+  matchedUserId = matchedUser.id
+  matchedUserFs = useDocument<User>(
+    doc(collection(firestore, "users"), matchedUserId)
+  );
+  const body = computed(() => `Hi, ${matchedUser?.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`)
 }
 
-console.log("MATCHED USER", matchedUser);
 
-const matchedUserFs = useDocument<User>(
-  doc(collection(firestore, "users"), matchedUser.id)
-);
-
-const body = computed(() => `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`)
 </script>
