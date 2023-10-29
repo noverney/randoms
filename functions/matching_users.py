@@ -27,8 +27,8 @@ def add_noise_to_array(arr, noise_factor):
     elif noise_factor == 0:
         return arr
     noise = np.random.uniform(0, noise_factor, arr.shape)
-    noisy_array = arr + noise
-    noisy_array = np.clip(noisy_array, 0, 1)
+    noise = (noise + noise.T) / 2
+    noisy_array = arr*(1-noise_factor) + noise
     return noisy_array
 
 def get_preference_lists(user_ids, preference_matrix):

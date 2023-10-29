@@ -1,7 +1,14 @@
 <template>
   <div>
     <div class="bg-white py-16 sm:py-24">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div v-if="!matchedUserFs?.id" class="w-full flex justify-center text-center">
+        <div class="space-y-2">
+          <h2 class="text-lg">Nothing to see here, wait for your next match..</h2>
+          <img class="max-w-xl" src="/empty-state.jpg">
+        </div>
+      </div>
+      <div v-else class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <h1 class="text-2xl font-bold py-5">It's a match!! 🎉</h1>
         <div
           class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
           <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply" />
@@ -68,11 +75,11 @@
             </div>
             <figure>
               <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
-                <p class="italic font-light">“{{ funfact }}”</p>
+                <p class="italic font-light">“{{ matchedUserFs?.funfacts }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
-                  <UBadge v-for="(key, value) in userPreferences" color="white" variant="outline">{{ value }}
+                  <UBadge v-for="(key, value) in matchedUserFs?.preferences" color="white" variant="outline">{{ value }}
                   </UBadge>
                 </div>
               </figcaption>
@@ -82,13 +89,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Show all user details in a list -->
-  <!-- <ul>
-    <li v-for="user in users" :key="user.id">
-      {{ user.name }} : {{ user.preferences }}
-    </li>
-  </ul> -->
 </template>
 
 <script setup lang="ts">
@@ -106,7 +106,7 @@ export type User = {
 
 function sendEmail() {
   window.open(
-    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body}`,
+    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body.value}`,
     "_blank"
   );
 }
@@ -115,7 +115,7 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const isLoading = ref(false);
+const showEmptyState = ref(true);
 
 const firestore = useFirestore();
 const user = useCurrentUser();
@@ -126,25 +126,28 @@ const docsSnap = await getDocs(
 );
 
 // Get the latest match
+let matchedUserId = undefined
+let matchedUser = {}
+let matchedUserFs = undefined
+
 const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
 
-const participants = lastDoc.data().participants;
-let matchedUser = participants[0];
 
-if (matchedUser.id === userId) {
-  matchedUser = participants[1];
+if (lastDoc) {
+
+  const participants = lastDoc.data().participants;
+  matchedUser = participants[0];
+
+  if (matchedUser.id === userId) {
+    matchedUser = participants[1];
+  }
+
+  matchedUserId = matchedUser.id
+  matchedUserFs = useDocument<User>(
+    doc(collection(firestore, "users"), matchedUserId)
+  );
+  const body = computed(() => `Hi, ${matchedUser?.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`)
 }
 
-console.log("MATCHED USER", matchedUser);
 
-let matchedUserFs = useDocument<User>(
-  doc(collection(firestore, "users"), userId)
-);
-
-console.log("MATCHED USER FS", matchedUserFs?.value);
-const userPreferences = matchedUserFs?.value?.preferences;
-console.log("USER PREFERENCES", userPreferences);
-
-const funfact = matchedUserFs?.value?.funfacts;
-const body = `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`;
 </script>
