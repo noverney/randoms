@@ -14,7 +14,7 @@
                         <div>
                             <form @submit.prevent="signInWithPassword" class="space-y-6">
                                 <div class="relative">
-                                    <UInput v-model="email" id="email" name="email" type="text"
+                                    <input v-model="email" id="email" name="email" type="text"
                                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-sky-600"
                                         variant="none" placeholder="john@endress.com" />
                                     <label for="email"
@@ -24,7 +24,7 @@
                                 </div>
                                 
                                 <div class="mt-5 relative">
-                                    <UInput v-model="password" id="password" name="password" type="password"
+                                    <input v-model="password" id="password" name="password" type="password"
                                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-sky-600"
                                         variant="none" placeholder="password" />
                                     <label for="password"
