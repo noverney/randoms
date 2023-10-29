@@ -173,5 +173,8 @@ console.log("MATCHED USER", matchedUser);
 const matchedUserFs = useDocument(
   doc(collection(firestore, "users"), matchedUser.id)
 );
+console.log("MATCHED USER FS", matchedUserFs.value);
 const userPreferences = matchedUserFs.value?.preferences;
+console.log("USER PREFERENCES", userPreferences);
+console.log("DONE");
 </script>
