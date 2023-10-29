@@ -63,11 +63,29 @@
             />
           </div>
           <div class="relative mx-auto max-w-2xl lg:mx-0">
-            <img
-              class="h-24 w-auto object-cover rounded-full"
-              :src="matchedUser?.avatarUrl || ''"
-              alt=""
-            />
+            <div class="flex">
+              <img
+                class="h-24 w-auto object-cover rounded-full"
+                :src="matchedUser?.avatarUrl || ''"
+                alt=""
+              />
+              <div class="pl-7">
+                <div class="text-2xl font-semibold text-white">
+                  {{ matchedUser?.name }}
+                </div>
+                <div class="mt-1 text-gray-400 pb-3">
+                  {{ matchedUser?.team }}
+                </div>
+                <UButton
+                  variant="solid"
+                  icon="i-heroicons-envelope"
+                  @click="sendEmail()"
+                  trailing
+                >
+                  Contact
+                </UButton>
+              </div>
+            </div>
             <figure>
               <blockquote
                 class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8"
@@ -91,16 +109,6 @@
                     >#BoringPerson</UBadge
                   >
                 </div>
-                <div class="font-semibold">{{ matchedUser?.name }}</div>
-                <div class="mt-1">{{ matchedUser?.team }}</div>
-                <UButton
-                  variant="solid"
-                  icon="i-heroicons-envelope"
-                  @click="sendEmail()"
-                  trailing
-                >
-                  Contact
-                </UButton>
               </figcaption>
             </figure>
           </div>
