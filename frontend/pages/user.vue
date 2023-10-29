@@ -136,5 +136,7 @@ const saveChanges = async () => {
     team: department.value,
     days: selectedDays.value
   });
+
+  navigateTo('/')
 };
 </script>
