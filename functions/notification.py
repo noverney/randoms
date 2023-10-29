@@ -28,9 +28,9 @@ def send_email_to_user(user: User, matchedWith: User):
       TemplateId="33637852",
       TemplateModel={
         "name": user.name,
-        "action_url": "https://baselhack2023-randoms.web.app/",
+        "action_url": "https://meetingmunch.com/",
         "matched_with": matchedWith.name,
-        "help_url": "https://baselhack2023-randoms.web.app/",
+        "help_url": "https://meetingmunch.com/",
         "product_name": "MeetingMunch"
       }
     )
