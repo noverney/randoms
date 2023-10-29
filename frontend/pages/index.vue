@@ -94,6 +94,8 @@
                 </div>
                 <div class="font-semibold">{{ nextMatchedUser?.name }}</div>
                 <div class="mt-1">{{ nextMatchedUser?.team }}</div>
+              <UButton variant="ghost" icon="i-heroicons-envelope" @click="sendEmail()">
+             </UButton>
               </figcaption>
             </figure>
           </div>
@@ -121,6 +123,10 @@ type User = {
     [key: string]: string;
   };
 };
+
+function sendEmail() {
+  window.location = "mailto:remy.jaume@gmail.com"
+}
 
 definePageMeta({
   middleware: ["auth"],
