@@ -90,7 +90,7 @@
               <blockquote
                 class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8"
               >
-                <p>“{{ funfacts }}”</p>
+                <p>“{{ funfact }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
@@ -118,14 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  collection,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 
 export type User = {
   days: Array<string>;
@@ -138,22 +131,22 @@ export type User = {
 };
 
 function sendEmail() {
-  window.open(`mailto:${matchedUser?.email}`, "_blank");
+  window.open(
+    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body}`,
+    "_blank"
+  );
 }
 
 definePageMeta({
   middleware: ["auth"],
 });
 
-const funfacts = ref(
-  "I have a talent for remembering an unusual number of random trivia facts. It's like having a mental library of quirky information, and I'm always ready to share a fun fact at any social gathering!"
-);
-
 const isLoading = ref(false);
 
 const firestore = useFirestore();
 const user = useCurrentUser();
 const userId = user.value?.uid;
+const username = user.value?.displayName;
 const docsSnap = await getDocs(
   collection(firestore, `users/${userId}/matches`)
 );
@@ -170,11 +163,14 @@ if (matchedUser.id === userId) {
 
 console.log("MATCHED USER", matchedUser);
 
-const matchedUserFs = useDocument(
-  doc(collection(firestore, "users"), matchedUser.id)
+let matchedUserFs = useDocument<User>(
+  doc(collection(firestore, "users"), userId)
 );
-console.log("MATCHED USER FS", matchedUserFs.value);
-const userPreferences = matchedUserFs.value?.preferences;
+
+console.log("MATCHED USER FS", matchedUserFs?.value);
+const userPreferences = matchedUserFs?.value?.preferences;
 console.log("USER PREFERENCES", userPreferences);
-console.log("DONE");
+
+const funfact = matchedUserFs?.value?.funfacts;
+const body = `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`;
 </script>
