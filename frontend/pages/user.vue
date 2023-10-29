@@ -31,7 +31,7 @@
         </UFormGroup>
         <UFormGroup required label="Weight your interests" name="preferences">
           <ul role="list"
-            class="grid justify-items-stretch mt-4 grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
+            class="grid justify-items-stretch mt-4 grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3">
             <li v-for="(value, key) of interests" :key="key" class="col-span-1 flex rounded-md shadow-sm">
               <div v-if="value"
                 class="flex flex-1 items-center justify-between truncate rounded-md border border-gray-200 bg-white">
@@ -68,7 +68,7 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const interests = ['Mangas', 'Harry Potter', 'Hacking']
+const interests = ['Sports', 'Eating', 'Board Games', 'Video Games', 'Coffee Enthusiasm', 'Tea Appreciation', 'Nightlife and Parties', 'Nature and Greenery', 'Books', 'Anime and Manga']
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 
 const user = useCurrentUser();
