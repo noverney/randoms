@@ -62,5 +62,5 @@ def add_fake_users(req: https_fn.Request) -> https_fn.Response:
   if os.environ["PROFILE"] != "dev":
     return https_fn.Response("Not allowed")
   print("Adding fake users")
-  add_fake_firestore_users(10)
+  add_fake_firestore_users(4)
   return https_fn.Response("Added 10 fake users")
