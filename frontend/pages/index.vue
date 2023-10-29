@@ -68,11 +68,11 @@
             </div>
             <figure>
               <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
-                <p class="italic font-light">“{{ funfact }}”</p>
+                <p class="italic font-light">“{{ matchedUserFs?.funfacts }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
-                  <UBadge v-for="(key, value) in userPreferences" color="white" variant="outline">{{ value }}
+                  <UBadge v-for="(key, value) in matchedUserFs?.preferences" color="white" variant="outline">{{ value }}
                   </UBadge>
                 </div>
               </figcaption>
@@ -106,7 +106,7 @@ export type User = {
 
 function sendEmail() {
   window.open(
-    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body}`,
+    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body.value}`,
     "_blank"
   );
 }
@@ -115,7 +115,7 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const isLoading = ref(false);
+const showEmptyState = ref(true);
 
 const firestore = useFirestore();
 const user = useCurrentUser();
@@ -137,14 +137,9 @@ if (matchedUser.id === userId) {
 
 console.log("MATCHED USER", matchedUser);
 
-let matchedUserFs = useDocument<User>(
-  doc(collection(firestore, "users"), userId)
+const matchedUserFs = useDocument<User>(
+  doc(collection(firestore, "users"), matchedUser.id)
 );
 
-console.log("MATCHED USER FS", matchedUserFs?.value);
-const userPreferences = matchedUserFs?.value?.preferences;
-console.log("USER PREFERENCES", userPreferences);
-
-const funfact = matchedUserFs?.value?.funfacts;
-const body = `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`;
+const body = computed(() => `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`)
 </script>
