@@ -103,10 +103,10 @@ const config = {
                 label: 'GitHub Issues',
                 href: 'https://github.com/noverney/randoms/issues',
               },
-              // {
-              //   label: 'Discord',
-              //   href: 'https://discordapp.com/invite/docusaurus',
-              // },
+              {
+                 label: 'BaselHack',
+                 href: 'https://www.baselhack.ch/',
+              },
               // {
               //   label: 'Twitter',
               //   href: 'https://twitter.com/docusaurus',
