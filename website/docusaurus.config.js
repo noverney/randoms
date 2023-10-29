@@ -67,7 +67,7 @@ const config = {
         title: 'MeetingMunch',
         logo: {
           alt: 'MeetingMunch',
-          src: 'img/logo.svg',
+          src: 'img/SVG/justlogo.svg',
         },
         items: [
           {
