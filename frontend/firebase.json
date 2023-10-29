@@ -6,8 +6,8 @@
       "cleanUrls": true,
       "rewrites": [
         {
-          "source": "/docs/**",
-          "destination": "/docs"
+          "source": "/welcome/**",
+          "destination": "/welcome"
         },
         {
           "source": "**",

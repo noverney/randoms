@@ -57,3 +57,25 @@ conda config --set auto_activate_base false
 
 Install the emulators with `firebase init emulators` and then run `firebase emulators:start` to start the emulators.
 The emulator UI will be available under `localhost:4000`. The webpage will be available under `localhost:5000`.
+
+## Deploying to Production
+
+First, build the frontend packages.
+
+```bash
+cd frontend
+npm run generate
+cd ../website
+npm run build
+cd ..
+```
+
+Then, deploy the functions, firestore, and hosting.
+
+```bash
+firebase deploy --except hosting
+cd frontend
+firebase deploy --only hosting
+```
+
+This will deploy the functions, firestore, and hosting to production.

@@ -2,7 +2,7 @@
 # To get started, simply uncomment the below code or create your own.
 # Deploy with `firebase deploy`
 
-from firebase_functions import https_fn
+from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
 from firebase_admin import firestore
 from firebase_admin import auth
@@ -35,7 +35,7 @@ def match_users(users: list[User]):
   return [Match(pair[0], pair[1]) for pair in create_matches_from_users(users)]
 
 
-@https_fn.on_request(secrets=[POSTMARK_API_KEY])
+@https_fn.on_request(secrets=[POSTMARK_API_KEY], memory=options.MemoryOption.GB_4)
 def trigger_matching(req: https_fn.Request) -> https_fn.Response:
   matches = match_users(get_all_users())
   resp = ""
