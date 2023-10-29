@@ -4,7 +4,7 @@
             <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
                 <div class="mx-auto w-full max-w-sm lg:w-96">
                     <div>
-                        <img class="h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                        <img class="h-10 w-auto" src="/justlogo.svg"
                             alt="Your Company" />
                         <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account
                         </h2>
@@ -13,22 +13,24 @@
                     <div class="mt-10">
                         <div>
                             <form @submit.prevent="signInWithPassword" class="space-y-6">
-                                <div>
-                                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
-                                        address</label>
-                                    <div class="mt-2">
-                                        <UInput v-model="email" id="email" name="email" type="email" autocomplete="email"
-                                            required />
-                                    </div>
+                                <div class="relative">
+                                    <UInput v-model="email" id="email" name="email" type="text"
+                                        class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-sky-600"
+                                        variant="none" placeholder="john@endress.com" />
+                                    <label for="email"
+                                        class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
+                                        Email address
+                                    </label>
                                 </div>
-
-                                <div>
+                                
+                                <div class="mt-5 relative">
+                                    <UInput v-model="password" id="password" name="password" type="password"
+                                        class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-sky-600"
+                                        variant="none" placeholder="password" />
                                     <label for="password"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                                    <div class="mt-2">
-                                        <UInput v-model="password" id="password" name="password" type="password"
-                                            autocomplete="current-password" required />
-                                    </div>
+                                        class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">
+                                        Password
+                                    </label>
                                 </div>
 
                                 <div>
