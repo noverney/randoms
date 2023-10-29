@@ -29,13 +29,17 @@ def get_workdays():
   return [days for nr, days in enumerate(['Mon', 'Tue', 'Wed','Thu','Fri']) if random_array[nr]]
 
 def get_preferences():
-  preference_topics = ['Lord of the Rings', 'Hackatons', 'Console Gaming', 'PC Gaming', 'Humans', 'Bouldering', 'Boxing', 'Football']
+  preference_topics = ['Lord of the Rings', 'Sports', 'Football', 'PC Gaming', 'Console Gaming', 'Sleeping', 'Hygiene', 'Cooking', 'Books', 'Anime/Manga']
   score = [0,0,0,0,0,0,0,0,0,0,1,2,3,4,5]
   return {preference:random.choice(score) for preference in preference_topics}
 
 def create_fake_users(amount):
   fake = Faker(locale = "en_GB")
   return [User(i, {'name':fake.name(),'days':get_workdays(),'preferences':get_preferences()}) for i in range(amount)]
+
+def get_funfact(preferences):
+  max_key = max(preferences, key=preferences.get)
+  return 'I really like {}!'.format(max_key)
 
 def add_fake_firestore_users(amount):
   fake_users = create_fake_users(amount)
@@ -46,6 +50,6 @@ def add_fake_firestore_users(amount):
       "name": user.name,
       "preferences": user.preferences,
       "days": user.days,
-      "fun-facts": ["I like to eat", "I like to sleep", "I like to code"]
+      "fun-facts": get_funfact(user.preferences)
     })
     print(f"Created user {user.name} with id {new_user.uid}")
