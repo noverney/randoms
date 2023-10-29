@@ -59,7 +59,7 @@ def trigger_matching(req: https_fn.Request) -> https_fn.Response:
             "id": match.user2.id,
             "name": match.user2.name,
             "email": match.user2.email,
-            "avatarUrl": match.user1.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user2.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+            "avatarUrl": match.user2.avatarUrl or f"https://source.boringavatars.com/beam/120/{match.user2.id}?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
           }
         ],
         "date": match.date.isoformat()

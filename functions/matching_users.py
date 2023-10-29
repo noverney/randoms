@@ -5,7 +5,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import collections
-from functions.data import User
+from data import User
 
 def get_sorted_list_func(user_ids, user_preferences):
     def get_sorted_list(user_index):
