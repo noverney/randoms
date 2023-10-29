@@ -8,6 +8,7 @@
         </div>
       </div>
       <div v-else class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <h1 class="text-2xl font-bold py-5">It's a match!! 🎉</h1>
         <div
           class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
           <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply" />
