@@ -164,7 +164,7 @@ const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
 const participants = lastDoc.data().participants;
 let matchedUser = participants[0];
 
-if (matchedUser === userId) {
+if (matchedUser.id === userId) {
   matchedUser = participants[1];
 }
 
