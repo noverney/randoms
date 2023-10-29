@@ -28,7 +28,7 @@
     </div>
   </header>
   <main>
-    <div class="mx-auto max-w-7xl items-center p-4 sm:px-6 lg:px-8 overflow-y-auto">
+    <div class="mx-auto max-w-7xl items-center p-4 sm:px-6 lg:px-8 overflow-y-auto h-[calc(100dvh-4rem)]">
       <slot />
     </div>
   </main>
