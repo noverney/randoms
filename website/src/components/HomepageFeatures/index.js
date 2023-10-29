@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Setup Your Account',
+    Svg: require('@site/static/img/SVG/question.svg').default,
     description: (
       <>
         Ever played &apos;Guess Who?&apos; with your colleagues? Dive into Meeting Munch and discover teammates hiding in plain sight!
@@ -13,8 +13,8 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Choose Your Preferences',
+    Svg: require('@site/static/img/SVG/interpersonal.svg').default,
     description: (
       <>
         Less than 5 quick questions and bam! You&apos;re set up with a mystery colleague. Who knew office intros could feel like a game show?
@@ -22,8 +22,8 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Meet in Real Life',
+    Svg: require('@site/static/img/SVG/icebreaker.svg').default,
     description: (
       <>
         Need a convo starter? We&apos;ve got you covered! Kick things off with a quirky fun fact about your new pal. Chatting has never been this fun!
