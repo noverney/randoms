@@ -7,7 +7,7 @@
       </NuxtLink>
       <div class="flex items-center gap-x-8">
         <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
-          :popper="{ placement: 'bottom-start' }">
+          :popper="{ placement: 'bottom-end' }">
           <UAvatar :src="currentUser?.photoURL ||
             'https://avatars.githubusercontent.com/u/739984?v=4'
             " />
