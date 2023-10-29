@@ -6,7 +6,7 @@
           class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
           <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply" />
           <div class="absolute -left-80 -top-56 transform-gpu blur-3xl" aria-hidden="true">
-            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#009EE3] opacity-[0.45]"
+            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#A8005C] to-[#009EE3] opacity-[0.45]"
               style="
                 clip-path: polygon(
                   74.1% 44.1%,
@@ -30,7 +30,7 @@
           </div>
           <div class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:transform-gpu md:blur-3xl"
             aria-hidden="true">
-            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#009EE3] opacity-25" style="
+            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#A8005C] to-[#009EE3] opacity-25" style="
                 clip-path: polygon(
                   74.1% 44.1%,
                   100% 61.6%,
@@ -52,21 +52,29 @@
               " />
           </div>
           <div class="relative mx-auto max-w-2xl lg:mx-0">
-            <img class="h-24 w-auto object-cover rounded-full" :src="user?.photoURL || ''" alt="" />
+            <div class="flex">
+              <img class="h-24 w-auto object-cover rounded-full" :src="matchedUser?.avatarUrl || ''" alt="" />
+              <div class="pl-7">
+                <div class="text-2xl font-semibold text-white">
+                  {{ matchedUser?.name }}
+                </div>
+                <div class="mt-1 text-gray-400 pb-3">
+                  {{ matchedUser?.team }}
+                </div>
+                <UButton variant="solid" icon="i-heroicons-envelope" @click="sendEmail()" trailing>
+                  Contact
+                </UButton>
+              </div>
+            </div>
             <figure>
               <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
-                <p>“{{ funfacts }}”</p>
+                <p class="italic font-light">“{{ funfact }}”</p>
               </blockquote>
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
-                  <UBadge v-for="(value, key) in nextMatchedUser?.preferences" color="white" variant="outline">{{ key }}
+                  <UBadge v-for="(key, value) in userPreferences" color="white" variant="outline">{{ value }}
                   </UBadge>
-                  <UBadge v-if="Object.keys(nextMatchedUser?.preferences || {}).length ===
-                    0
-                    " color="white" variant="outline">#BoringPerson</UBadge>
                 </div>
-                <div class="font-semibold">{{ nextMatchedUser?.name }}</div>
-                <div class="mt-1">{{ nextMatchedUser?.team }}</div>
               </figcaption>
             </figure>
           </div>
@@ -84,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { collection, doc } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 
 export type User = {
   days: Array<string>;
@@ -96,20 +104,47 @@ export type User = {
   funfacts: string;
 };
 
+function sendEmail() {
+  window.open(
+    `mailto:${matchedUser?.email}?subject=Let's meet! 👋&body=${body}`,
+    "_blank"
+  );
+}
+
 definePageMeta({
   middleware: ["auth"],
 });
-
-const funfacts = ref(
-  "I have a talent for remembering an unusual number of random trivia facts. It's like having a mental library of quirky information, and I'm always ready to share a fun fact at any social gathering!"
-);
 
 const isLoading = ref(false);
 
 const firestore = useFirestore();
 const user = useCurrentUser();
-
-const nextMatchedUser = useDocument<User>(
-  doc(collection(firestore, "users"), user.value?.uid)
+const userId = user.value?.uid;
+const username = user.value?.displayName;
+const docsSnap = await getDocs(
+  collection(firestore, `users/${userId}/matches`)
 );
+
+// Get the latest match
+const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
+
+const participants = lastDoc.data().participants;
+let matchedUser = participants[0];
+
+if (matchedUser.id === userId) {
+  matchedUser = participants[1];
+}
+
+console.log("MATCHED USER", matchedUser);
+
+let matchedUserFs = useDocument<User>(
+  doc(collection(firestore, "users"), userId)
+);
+
+console.log("MATCHED USER FS", matchedUserFs?.value);
+const userPreferences = matchedUserFs?.value?.preferences;
+console.log("USER PREFERENCES", userPreferences);
+
+const funfact = matchedUserFs?.value?.funfacts;
+const body = `Hi, ${matchedUser.name} %0D%0A%0D%0A How about grabbing a coffee sometime this week%3F %0D%0A%0D%0A Best, %0D%0A ${username}`;
 </script>
