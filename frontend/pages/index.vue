@@ -65,7 +65,7 @@
           <div class="relative mx-auto max-w-2xl lg:mx-0">
             <img
               class="h-24 w-auto object-cover rounded-full"
-              :src="user?.photoURL || ''"
+              :src="matchedUser?.avatarUrl || ''"
               alt=""
             />
             <figure>
@@ -77,28 +77,29 @@
               <figcaption class="mt-6 text-base text-white">
                 <div class="pb-4 space-x-2">
                   <UBadge
-                    v-for="(value, key) in nextMatchedUser?.preferences"
+                    v-for="(value, key) in matchedUser?.preferences"
                     color="white"
                     variant="outline"
                     >{{ key }}
                   </UBadge>
                   <UBadge
                     v-if="
-                      Object.keys(nextMatchedUser?.preferences || {}).length ===
-                      0
+                      Object.keys(matchedUser?.preferences || {}).length === 0
                     "
                     color="white"
                     variant="outline"
                     >#BoringPerson</UBadge
                   >
                 </div>
-                <div class="font-semibold">{{ nextMatchedUser?.name }}</div>
-                <div class="mt-1">{{ nextMatchedUser?.team }}</div>
+                <div class="font-semibold">{{ matchedUser?.name }}</div>
+                <div class="mt-1">{{ matchedUser?.team }}</div>
                 <UButton
-                  variant="ghost"
+                  variant="solid"
                   icon="i-heroicons-envelope"
                   @click="sendEmail()"
+                  trailing
                 >
+                  Contact
                 </UButton>
               </figcaption>
             </figure>
@@ -117,7 +118,14 @@
 </template>
 
 <script setup lang="ts">
-import { collection, doc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 
 type User = {
   days: Array<string>;
@@ -129,7 +137,7 @@ type User = {
 };
 
 function sendEmail() {
-  window.open("mailto:remy.jaume@gmail.com", "_blank");
+  window.open(`mailto:${matchedUser?.email}`, "_blank");
 }
 
 definePageMeta({
@@ -144,8 +152,13 @@ const isLoading = ref(false);
 
 const firestore = useFirestore();
 const user = useCurrentUser();
-
-const nextMatchedUser = useDocument<User>(
-  doc(collection(firestore, "users"), user.value?.uid)
+const userId = user.value?.uid;
+const docsSnap = await getDocs(
+  collection(firestore, `users/${userId}/matches`)
 );
+
+// Get the latest match
+const lastDoc = docsSnap.docs[docsSnap.docs.length - 1];
+const matchedUser = lastDoc.data().participants[0];
+console.log("MATCHED USER", matchedUser);
 </script>
