@@ -87,3 +87,5 @@ def add_fake_users(req: https_fn.Request) -> https_fn.Response:
   print("Adding fake users")
   add_fake_firestore_users(4)
   return https_fn.Response("Added 10 fake users")
+
+
