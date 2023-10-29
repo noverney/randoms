@@ -45,7 +45,7 @@ def create_rounded_image(image_path, output_path):
     im = add_corners(im, radius)
     im.save(output_path, transparent=True)
 
-def create_qr(center_logo_path, output_path, data='http://meetingmunch.com/docs'):
+def create_qr(center_logo_path, output_path, data='https://meetingmunch.com/welcome'):
 
     # create a temp path 
     temp_dir = tempfile.TemporaryDirectory()
