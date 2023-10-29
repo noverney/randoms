@@ -31,7 +31,7 @@
         </UFormGroup>
         <UFormGroup required label="Weight your interests" name="preferences">
           <ul role="list"
-            class="grid justify-items-stretch mt-4 grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
+            class="grid justify-items-stretch mt-4 grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
             <li v-for="(value, key) of interests" :key="key" class="col-span-1 flex rounded-md shadow-sm">
               <div v-if="value"
                 class="flex flex-1 items-center justify-between truncate rounded-md border border-gray-200 bg-white">
@@ -138,8 +138,8 @@ const saveChanges = async () => {
     team: department.value,
     days: selectedDays.value
   });
-  
-  toast.add({title: 'Informations Saved!', icon: 'i-heroicons-check-circle'})
+
+  toast.add({ title: 'Informations Saved!', icon: 'i-heroicons-check-circle' })
 
   navigateTo('/')
 };
