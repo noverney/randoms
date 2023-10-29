@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'MeetingMunch',
-  tagline: 'Meetings are cool',
+  tagline: 'Meeting new people and Munch on some facts',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -18,7 +18,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
+  organizationName: 'meetinginmunch', // Usually your GitHub org/user name.
   projectName: 'randoms', // Usually your repo name.
 
   onBrokenLinks: 'warn',
@@ -67,16 +67,16 @@ const config = {
         title: 'MeetingMunch',
         logo: {
           alt: 'MeetingMunch',
-          src: 'img/logo.svg',
+          src: 'img/SVG/justlogo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          // {
+          //   type: 'docSidebar',
+          //   sidebarId: 'tutorialSidebar',
+          //   position: 'left',
+          //   label: 'Tutorial',
+          // },
+          // {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/noverney/randoms',
             label: 'GitHub',
@@ -87,22 +87,22 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
+          // {
+          //   title: 'Docs',
+          //   items: [
+          //     {
+          //       label: 'Tutorial',
+          //       to: '/docs/intro',
+          //     },
+          //   ],
+          // },
           {
             title: 'Community',
             items: [
-              // {
-              //   label: 'Stack Overflow',
-              //   href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              // },
+              {
+                label: 'GitHub Issues',
+                href: 'https://github.com/noverney/randoms/issues',
+              },
               // {
               //   label: 'Discord',
               //   href: 'https://discordapp.com/invite/docusaurus',
@@ -116,10 +116,10 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
+              // {
+              //   label: 'Blog',
+              //   to: '/blog',
+              // },
               {
                 label: 'GitHub',
                 href: 'https://github.com/noverney/randoms',
@@ -127,7 +127,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} MeetingMunch, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} MeetingMunch, Inc. Built at BaselHack.`,
       },
       prism: {
         theme: lightCodeTheme,

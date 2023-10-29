@@ -1,9 +1,9 @@
 <template>
   <div class="flex items-center justify-center h-full">
     <UCard class="w-[50rem]" :ui="{ shadow: 'shadow-lg' }">
-      <form @submit.prevent="saveChanges" class="space-y-8 p-6">
+      <UForm :validate="validate" @submit.prevent="saveChanges" class="space-y-8 p-6">
         <div class="flex items-center space-x-4 pb-4">
-          <UAvatar class="border" :src="user?.photoURL || ''" alt="Avatar" size="3xl" />
+          <UAvatar class="border" :src="user?.photoURL || ''" :alt="user?.displayName?.toUpperCase() || 'A'" size="3xl" />
           <div class="space-y-2">
             <p class="font-semibold text-xl">{{ user?.displayName }}</p>
             <p>{{ extendedUserInformation?.team || 'no team selected' }}</p>
@@ -29,7 +29,7 @@
             </li>
           </ul>
         </UFormGroup>
-        <UFormGroup required label="Select your interests (at least one)" name="preferences">
+        <UFormGroup required label="Weight your interests" name="preferences">
           <ul role="list"
             class="grid justify-items-stretch mt-4 grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
             <li v-for="(value, key) of interests" :key="key" class="col-span-1 flex rounded-md shadow-sm">
@@ -50,7 +50,7 @@
             Save changes
           </UButton>
         </div>
-      </form>
+      </UForm>
     </UCard>
   </div>
 </template>
@@ -58,6 +58,7 @@
 <script setup lang="ts">
 import { collection, doc, setDoc } from "firebase/firestore";
 import type { User } from "./index.vue";
+import type { FormError } from "@nuxt/ui/dist/runtime/types/form";
 
 type UserInterests = {
   [key: string]: number
@@ -83,6 +84,12 @@ watch(extendedUserInformation, () => {
   }
   if (extendedUserInformation.value?.preferences) {
     userInterests.value = extendedUserInformation.value.preferences
+    // check if there is some weighting in place, replace with 1 otherwise
+    for (const [key, value] of Object.entries(userInterests.value)) {
+      if (value === 0) {
+        userInterests.value[key] = 1
+      }
+    }
   }
   if (extendedUserInformation.value?.team) {
     department.value = extendedUserInformation.value.team
@@ -108,10 +115,13 @@ const toggleWeekDay = (key: string) => {
   }
 }
 
-const funfacts = ref(
-  "I have a talent for remembering an unusual number of random trivia facts. It's like having a mental library of quirky information, and I'm always ready to share a fun fact at any social gathering!"
-);
-
+const validate = (state: any): FormError[] => {
+  const errors = []
+  if (!department.value || department.value == '') errors.push({ path: 'team', message: 'Required' })
+  if (!funfact.value || funfact.value == '') errors.push({ path: 'description', message: 'Required' })
+  if (selectedDays.value.length <= 0) errors.push({ path: 'days', message: 'Select at least one day' })
+  return errors
+}
 
 const saveChanges = async () => {
   // Save the interests and funfacts to the users database
