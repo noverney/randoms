@@ -6,7 +6,7 @@
           class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
           <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply" />
           <div class="absolute -left-80 -top-56 transform-gpu blur-3xl" aria-hidden="true">
-            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-[0.45]"
+            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#009EE3] opacity-[0.45]"
               style="
                 clip-path: polygon(
                   74.1% 44.1%,
@@ -30,7 +30,7 @@
           </div>
           <div class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:transform-gpu md:blur-3xl"
             aria-hidden="true">
-            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-25" style="
+            <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#009EE3] opacity-25" style="
                 clip-path: polygon(
                   74.1% 44.1%,
                   100% 61.6%,
